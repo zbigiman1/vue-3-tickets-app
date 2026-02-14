@@ -28,8 +28,7 @@ vi.mock('vue-i18n', async (importOriginal) => {
 
 // Provide a mocked route with params.id = '1'
 vi.mock('vue-router', () => ({
-  useRoute: () => ({ params: { id: '1' } }),
-  RouterLink: { template: '<a><slot /></a>' }
+  useRoute: () => ({ params: { id: '1' } })
 }))
 
 describe('TicketDetails.vue', () => {
