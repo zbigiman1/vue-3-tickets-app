@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+    <div class="loader" data-test="loader">
         <div class="loader-content">
             <div class="spinner"></div>
         </div>
