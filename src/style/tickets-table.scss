@@ -1,0 +1,62 @@
+@import './variables.scss';
+
+.tickets-filter {
+    margin-bottom: $spacing;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        &:nth-child(even) {
+            background: $table-row-even-bg;
+        }
+
+        &.ticket-row {
+            cursor: pointer;
+
+            &:hover {
+                background: $table-ticket-row-hover-bg;
+            }
+        }
+    }
+
+    th,
+    td {
+        padding: $spacing;
+        border-bottom: 1px solid $border-color;
+        text-align: left;
+    }
+
+    thead {
+        background: $table-header-bg;
+        font-weight: $font-weight-bold;
+    }
+
+    /* 📱 Mobile view */
+    @media (max-width: 768px) {
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: block;
+            background: $card-background;
+            margin-bottom: $spacing;
+            border-radius: $border-radius;
+            box-shadow: $card-box-shadow;
+            padding: $spacing;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            padding: $card-td-padding 0;
+        }
+    }
+}

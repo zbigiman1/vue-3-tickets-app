@@ -1,0 +1,43 @@
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .select-label {
+        margin-right: 0.5rem;
+        font-size: 0.875rem;
+        color: $text-color;   
+    }
+
+    .select {
+        width: 10rem;
+        padding: $button-padding;
+        font-size: 0.875rem;
+        border-radius: $border-radius;
+        border: 1px solid $border-color;
+        background-color: $background-color;
+        cursor: pointer;
+
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        &:focus {
+            outline: none;
+            border-color: $green-color;
+            box-shadow: $select-active-box-shadow
+        }
+    }
+
+    &:after {
+        content: "▼";
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 0.75rem;
+        color: #666;
+    }
+
+}

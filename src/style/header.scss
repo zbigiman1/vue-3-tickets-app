@@ -1,0 +1,31 @@
+.header {
+    background-color: $blue-color;
+    color: $white-color;
+    width: 100%;
+    
+    .header-content {
+        max-width: $page-max-width;
+        padding: $spacing;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .locale-switcher {
+            button {
+                background: none;
+                border: none;
+                color: $white-color;
+                font-size: 0.875rem;
+                cursor: pointer;
+                padding: 0.25rem 0.5rem;
+
+                &:hover,
+                &.active {
+                    background-color: $locale-switcher-button-active-bg;
+                    border-radius: $border-radius;
+                }
+            }
+        }
+    }
+}

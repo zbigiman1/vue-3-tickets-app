@@ -1,0 +1,22 @@
+.ticket-details {
+    
+    .ticket-details-header {
+        display: flex;
+        justify-content: space-between;
+
+        .tickets-status-dropdown {
+            display: flex;
+            gap: 0.5rem;
+        }
+    }
+
+    .ticket-details-list {
+        li {
+            padding: 0.5rem $spacing;
+        }
+    }
+
+    .ticket-description {
+        padding: $spacing;
+    }
+}

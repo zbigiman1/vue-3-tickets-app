@@ -1,0 +1,22 @@
+@import './variables.scss';
+
+.badge {
+  display: inline-block;
+  padding: $badge-padding;
+  border-radius: $border-radius;
+  font-size: $badge-font-size;
+  font-weight: $font-weight-bold;
+  color: $background-color;
+
+  &.new {
+    background-color: $blue-color;
+  }
+
+  &.in_progress {
+    background-color: $orange-color;
+  }
+
+  &.closed {
+    background-color: $green-color;
+  }  
+}
