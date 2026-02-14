@@ -11,7 +11,7 @@
             font-size: 0.875rem;
             font-weight: variables.$font-weight-bold;
 
-            @media (max-width: 400px) {
+            @media (max-width: 425px) {
                 background-color: variables.$blue-color;
                 color: variables.$white-color;
                 padding: variables.$button-padding;
@@ -21,7 +21,7 @@
         }
 
         .back-to-list-text {
-            @media (max-width: 400px) {
+            @media (max-width: 425px) {
                 display: none;
             }
         }
