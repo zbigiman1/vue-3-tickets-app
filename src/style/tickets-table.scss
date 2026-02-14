@@ -1,7 +1,7 @@
-@import './variables.scss';
+@use 'variables.scss';
 
 .tickets-filter {
-    margin-bottom: $spacing;
+    margin-bottom: variables.$spacing;
     display: flex;
     justify-content: flex-end;
 }
@@ -12,28 +12,28 @@
 
     tr {
         &:nth-child(even) {
-            background: $table-row-even-bg;
+            background: variables.$table-row-even-bg;
         }
 
         &.ticket-row {
             cursor: pointer;
 
             &:hover {
-                background: $table-ticket-row-hover-bg;
+                background: variables.$table-ticket-row-hover-bg;
             }
         }
     }
 
     th,
     td {
-        padding: $spacing;
-        border-bottom: 1px solid $border-color;
+        padding: variables.$spacing;
+        border-bottom: 1px solid variables.$border-color;
         text-align: left;
     }
 
     thead {
-        background: $table-header-bg;
-        font-weight: $font-weight-bold;
+        background: variables.$table-header-bg;
+        font-weight: variables.$font-weight-bold;
     }
 
     /* 📱 Mobile view */
@@ -44,11 +44,11 @@
 
         tr {
             display: block;
-            background: $card-background;
-            margin-bottom: $spacing;
-            border-radius: $border-radius;
-            box-shadow: $card-box-shadow;
-            padding: $spacing;
+            background: variables.$card-background;
+            margin-bottom: variables.$spacing;
+            border-radius: variables.$border-radius;
+            box-shadow: variables.$card-box-shadow;
+            padding: variables.$spacing;
         }
 
         td {
@@ -56,7 +56,7 @@
             justify-content: space-between;
             align-items: center;
             border: none;
-            padding: $card-td-padding 0;
+            padding: variables.$card-td-padding 0;
         }
     }
 }

@@ -1,3 +1,4 @@
+@use "sass:color";
 $text-color: #333;
 $text-color-light: #777;
 $white-color: #fff;
@@ -11,7 +12,7 @@ $gray-color: #a0a0a0;
 $yellow-color: #E0BC00;
 $red-color: #FA5053;
 $link-color: #297AB1;
-$link-hover-color: darken($link-color, 5%);
+$link-hover-color: color.adjust($link-color, $lightness: -5%);
 
 $border-color: #ddd;
 $card-background: #f9f9f9;

@@ -29,27 +29,27 @@ describe('Header.vue', () => {
   it('calls setLocale when buttons clicked and updates active class', async () => {
     const wrapper = mount(Header)
 
-  const buttons = wrapper.findAll('.locale-switcher button')
-  const enButton = buttons[0]
-  const plButton = buttons[1]
+    const buttons = wrapper.findAll('.locale-switcher button')
+    const enButton = buttons[0]
+    const plButton = buttons[1]
 
-  // ensure elements exist
-  expect(enButton).toBeDefined()
-  expect(plButton).toBeDefined()
+    // ensure elements exist
+    expect(enButton).toBeDefined()
+    expect(plButton).toBeDefined()
 
-  // EN is active initially
-  expect(enButton!.classes()).toContain('active')
-  expect(plButton!.classes()).not.toContain('active')
+    // EN is active initially
+    expect(enButton!.classes()).toContain('active')
+    expect(plButton!.classes()).not.toContain('active')
 
-  // click PL
-  await plButton!.trigger('click')
-  expect(mockLocaleStore.setLocale).toHaveBeenCalledWith('pl')
+    // click PL
+    await plButton!.trigger('click')
+    expect(mockLocaleStore.setLocale).toHaveBeenCalledWith('pl')
 
-  // simulate store locale change and remount to inspect classes
-  mockLocaleStore.locale = 'pl'
-  const wrapper2 = mount(Header)
-  const buttons2 = wrapper2.findAll('.locale-switcher button')
-  expect(buttons2[1]).toBeDefined()
-  expect(buttons2[1]!.classes()).toContain('active')
+    // simulate store locale change and remount to inspect classes
+    mockLocaleStore.locale = 'pl'
+    const wrapper2 = mount(Header)
+    const buttons2 = wrapper2.findAll('.locale-switcher button')
+    expect(buttons2[1]).toBeDefined()
+    expect(buttons2[1]!.classes()).toContain('active')
   })
 })

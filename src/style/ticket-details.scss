@@ -1,3 +1,5 @@
+@use "variables";
+
 .ticket-details {
     
     .ticket-details-header {
@@ -12,11 +14,11 @@
 
     .ticket-details-list {
         li {
-            padding: 0.5rem $spacing;
+            padding: 0.5rem variables.$spacing;
         }
     }
 
     .ticket-description {
-        padding: $spacing;
+        padding: variables.$spacing;
     }
 }

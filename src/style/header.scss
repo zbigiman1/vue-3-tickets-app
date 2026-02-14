@@ -1,11 +1,13 @@
+@use "variables";
+
 .header {
-    background-color: $blue-color;
-    color: $white-color;
+    background-color: variables.$blue-color;
+    color: variables.$white-color;
     width: 100%;
     
     .header-content {
-        max-width: $page-max-width;
-        padding: $spacing;
+        max-width: variables.$page-max-width;
+        padding: variables.$spacing;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -15,15 +17,15 @@
             button {
                 background: none;
                 border: none;
-                color: $white-color;
+                color: variables.$white-color;
                 font-size: 0.875rem;
                 cursor: pointer;
                 padding: 0.25rem 0.5rem;
 
                 &:hover,
                 &.active {
-                    background-color: $locale-switcher-button-active-bg;
-                    border-radius: $border-radius;
+                    background-color: variables.$locale-switcher-button-active-bg;
+                    border-radius: variables.$border-radius;
                 }
             }
         }

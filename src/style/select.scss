@@ -1,3 +1,5 @@
+@use "variables";
+
 .select-wrapper {
     position: relative;
     display: flex;
@@ -6,16 +8,16 @@
     .select-label {
         margin-right: 0.5rem;
         font-size: 0.875rem;
-        color: $text-color;   
+        color: variables.$text-color;   
     }
 
     .select {
         width: 10rem;
-        padding: $button-padding;
+        padding: variables.$button-padding;
         font-size: 0.875rem;
-        border-radius: $border-radius;
-        border: 1px solid $border-color;
-        background-color: $background-color;
+        border-radius: variables.$border-radius;
+        border: 1px solid variables.$border-color;
+        background-color: variables.$background-color;
         cursor: pointer;
 
         appearance: none;
@@ -24,8 +26,8 @@
 
         &:focus {
             outline: none;
-            border-color: $green-color;
-            box-shadow: $select-active-box-shadow
+            border-color: variables.$green-color;
+            box-shadow: variables.$select-active-box-shadow
         }
     }
 

@@ -12,7 +12,7 @@ vi.mock('@/api', () => ({
   updateTicketStatus: (...args: any[]) => mockUpdateTicketStatus(...args),
 }))
 
-import { useTicketsStore } from '../stores/useTicketsStore'
+import { useTicketsStore } from '@/stores/useTicketsStore'
 
 describe('useTicketsStore', () => {
   beforeEach(() => {
@@ -22,10 +22,10 @@ describe('useTicketsStore', () => {
   })
 
   it('getTickets sets loading and populates tickets', async () => {
-  const tickets = [{ id: 1, subject: 'A', status: 'new', customerName: 'X', priority: 'low', createdAt: '', description: '' }]
+    const tickets = [{ id: 1, subject: 'A', status: 'new', customerName: 'X', priority: 'low', createdAt: '', description: '' }]
     mockGetTickets.mockResolvedValue(tickets)
 
-  const store = useTicketsStore()
+    const store = useTicketsStore()
 
     const p = store.getTickets()
     // loading should be true while promise pending
@@ -39,7 +39,7 @@ describe('useTicketsStore', () => {
   })
 
   it('getTicketById sets loading and returns ticket', async () => {
-  const ticket = { id: 2, subject: 'B', status: 'closed', customerName: 'Y', priority: 'high', createdAt: '', description: '' }
+    const ticket = { id: 2, subject: 'B', status: 'closed', customerName: 'Y', priority: 'high', createdAt: '', description: '' }
     mockGetTicketById.mockResolvedValue(ticket)
 
     const store = useTicketsStore()
@@ -54,13 +54,13 @@ describe('useTicketsStore', () => {
   })
 
   it('updateTicketStatus updates existing ticket in store when present', async () => {
-  const initial = [{ id: 3, subject: 'C', status: 'new', customerName: 'Z', priority: 'medium', createdAt: '', description: '' }]
-  const updated = { ...initial[0], status: 'in_progress' }
+    const initial = [{ id: 3, subject: 'C', status: 'new', customerName: 'Z', priority: 'medium', createdAt: '', description: '' }]
+    const updated = { ...initial[0], status: 'in_progress' }
 
-  const store = useTicketsStore()
-  // Pinia unwraps refs returned from setup stores so we can assign directly
-  // cast to any to avoid strict Priority/Status unions in test fixtures
-  store.tickets = initial as any
+    const store = useTicketsStore()
+    // Pinia unwraps refs returned from setup stores so we can assign directly
+    // cast to any to avoid strict Priority/Status unions in test fixtures
+    store.tickets = initial as any
 
     mockUpdateTicketStatus.mockResolvedValue(updated)
 
@@ -75,8 +75,8 @@ describe('useTicketsStore', () => {
   })
 
   it('updateTicketStatus does not change tickets if ticket not present', async () => {
-  const store = useTicketsStore()
-  store.tickets = [] as any
+    const store = useTicketsStore()
+    store.tickets = [] as any
 
     const updated = { id: 99, subject: 'X', status: 'closed', customerName: 'No', priority: 'low', createdAt: '', description: '' }
     mockUpdateTicketStatus.mockResolvedValue(updated)

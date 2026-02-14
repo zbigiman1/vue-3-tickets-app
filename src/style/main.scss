@@ -1,39 +1,39 @@
-@import './reset.scss';
-@import './variables.scss';
-@import './layout.scss';
-@import './header.scss';
-@import './badge.scss';
-@import './select.scss';
-@import './button.scss';
-@import './tickets-table.scss';
-@import './ticket-details.scss';
-@import './loader.scss';
+@use 'reset.scss';
+@use 'variables.scss';
+@use 'layout.scss';
+@use 'header.scss';
+@use 'badge.scss';
+@use 'select.scss';
+@use 'button.scss';
+@use 'tickets-table.scss';
+@use 'ticket-details.scss';
+@use 'loader.scss';
 
 body {
-    font-family: $font-family;
-    font-size: $font-size;
-    background-color: $background-color;
-    color: $text-color;
+    font-family: variables.$font-family;
+    font-size: variables.$font-size;
+    background-color: variables.$background-color;
+    color: variables.$text-color;
 }
 
 h1 {
-    margin-bottom: $spacing;
-    font-size: $h1-font-size;
-    font-weight: $font-weight-bolder;
+    margin-bottom: variables.$spacing;
+    font-size: variables.$h1-font-size;
+    font-weight: variables.$font-weight-bolder;
 }
 
 p {
-    margin-bottom: $spacing;
+    margin-bottom: variables.$spacing;
 }
 
 strong {
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
 }
 
 a {
-    color: $link-color;
+    color: variables.$link-color;
 
     &:hover {
-        color: $link-hover-color;
+        color: variables.$link-hover-color;
     }
 }
