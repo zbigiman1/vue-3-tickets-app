@@ -4,7 +4,11 @@
     </div>
     <div v-else class="ticket-details">
         <header class="ticket-details-header">
-            <div><router-link to="/">&#x3c;&#x3c; {{ t('ticketsList') }}</router-link></div>
+            <div><router-link to="/">
+                    <span class="back-to-list-chevron">&#x3c;&#x3c;</span>
+                    <span class="back-to-list-text">{{ t('ticketsList') }}</span>
+                </router-link>
+            </div>
             <div class="tickets-status-dropdown">
                 <div class="select-wrapper">
                     <label for="status-select" class="select-label">{{ t('updateTicketStatus') }}:</label>
@@ -21,7 +25,7 @@
             <li><strong>{{ t('id') }}</strong>: {{ ticket.id }}</li>
             <li><strong>{{ t('customerName') }}</strong>: {{ ticket.customerName }}</li>
             <li><strong>{{ t('subject') }}</strong>: {{ ticket.subject }}</li>
-            <li><strong>{{ t('status') }}</strong>: 
+            <li><strong>{{ t('status') }}</strong>:
                 <span class="badge" :class="ticket.status">{{ t(ticket.status) }}</span>
             </li>
             <li><strong>{{ t('priority') }}</strong>: {{ t(ticket.priority) }}</li>

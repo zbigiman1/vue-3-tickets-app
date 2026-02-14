@@ -22,7 +22,7 @@ export const en = {
     high: 'High',
     all: 'All',
     filterByStatus: 'Filter by Status',
-    updateTicketStatus: 'Update ticket status',
+    updateTicketStatus: 'Update status',
     update: 'Update',
     copyright: 'Copyright zbigiman',
 }

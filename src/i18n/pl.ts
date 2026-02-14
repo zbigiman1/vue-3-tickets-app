@@ -21,7 +21,7 @@ export const pl = {
     high: 'Wysoki',
     all: 'Wszystkie',
     filterByStatus: 'Filtruj według statusu',
-    updateTicketStatus: 'Zmień status zgłoszenia',
+    updateTicketStatus: 'Zmień status',
     update: 'Zmień',
     copyright: 'Copyright zbigiman',
 }
