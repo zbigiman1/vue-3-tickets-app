@@ -4,13 +4,14 @@
     </div>
     <div v-else class="ticket-details">
         <header class="ticket-details-header">
-            <div><router-link to="/">
+            <nav>
+                <router-link to="/">
                     <span class="back-to-list-chevron">&#x3c;&#x3c;</span>
                     <span class="back-to-list-text">{{ t('ticketsList') }}</span>
                 </router-link>
-            </div>
-            <div class="tickets-status-dropdown">
-                <div class="select-wrapper">
+            </nav>
+            <div class="ticket-status-dropdown">
+                <div class="select-wrapper collapse-on-mobile">
                     <label for="status-select" class="select-label">{{ t('updateTicketStatus') }}:</label>
                     <select v-model="status" name="status-select" class="select">
                         <option value="new">{{ t('new') }}</option>

@@ -6,8 +6,10 @@
     align-items: center;
 
     /* 📱 Mobile view */
-    @media (max-width: 768px) {
-        flex-direction: column;
+    &.collapse-on-mobile {
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
     }
 
     .select-label {
@@ -30,5 +32,5 @@
             border-color: variables.$green-color;
             box-shadow: variables.$select-active-box-shadow
         }
-    }   
+    }
 }
