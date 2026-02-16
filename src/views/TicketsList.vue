@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <TicketsTable />
-    </div>
+    <TicketsTable />
 </template>
 
 <script setup lang="ts">
