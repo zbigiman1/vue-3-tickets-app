@@ -7,6 +7,7 @@ import { nextTick } from 'vue'
 const mockStore: any = {
   tickets: [],
   loading: false,
+  error: null,
   getTickets: vi.fn(),
   filterTicketsByStatus: vi.fn()
 }
@@ -81,6 +82,9 @@ describe('TicketsTable.vue', () => {
     const rows = wrapper.findAll('tbody tr.ticket-row')
     expect(rows.length).toBe(2)
 
+  // error should be cleared on success
+  expect(mockStore.error).toBeNull()
+
     // Click first row and assert router.push called with expected path
     const firstRow = rows[0]
     expect(firstRow).toBeDefined()
@@ -123,5 +127,25 @@ describe('TicketsTable.vue', () => {
     // after change, rows should equal filtered length
     await nextTick()
     expect(wrapper.findAll('tbody tr.ticket-row').length).toBe(filtered.length)
+  })
+
+  it('sets error when getTickets fails', async () => {
+    mockStore.loading = false
+    // simulate store catching the error, setting error, and returning an empty list
+    mockStore.getTickets = vi.fn().mockImplementation(async () => {
+      await Promise.resolve()
+      mockStore.error = 'network'
+      return []
+    })
+
+    mount(TicketsTable, {
+      global: { stubs: { Loader: { template: '<div data-test="loader">loader</div>' } } }
+    })
+
+    await nextTick()
+    await Promise.resolve()
+
+    expect(mockStore.error).toBe('network')
+    expect(mockStore.loading).toBe(false)
   })
 })

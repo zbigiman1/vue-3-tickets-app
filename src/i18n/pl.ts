@@ -24,4 +24,5 @@ export const pl = {
     updateTicketStatus: 'Zmień status',
     update: 'Zmień',
     copyright: 'Copyright zbigiman',
+    somethingWentWrong: 'Coś poszło nie tak.',
 }

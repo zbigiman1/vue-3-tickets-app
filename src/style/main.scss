@@ -8,6 +8,7 @@
 @use 'tickets-table.scss';
 @use 'ticket-details.scss';
 @use 'loader.scss';
+@use 'error-message.scss';
 
 body {
     font-family: variables.$font-family;

@@ -2,6 +2,9 @@
     <div v-if="ticketsStore.loading">
         <Loader />
     </div>
+    <div v-else-if="ticketsStore.error">
+        <ErrorMessage :error="ticketsStore.error" />
+    </div>
     <div v-else>
         <div class="tickets-filter">
             <div class="select-wrapper">
@@ -43,6 +46,7 @@ import type { Status, Ticket } from '@/types';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import ErrorMessage from './ErrorMessage.vue';
 import Loader from './Loader.vue';
 
 const { t } = useI18n()

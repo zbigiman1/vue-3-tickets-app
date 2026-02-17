@@ -18,3 +18,10 @@ config.global.stubs = {
   'router-view': true,
   RouterView: true
 }
+
+// Common UI components used across tests
+config.global.stubs = {
+  ...config.global.stubs,
+  ErrorMessage: { template: '<div data-test="error">error</div>' },
+  Loader: { template: '<div data-test="loader">loader</div>' }
+}

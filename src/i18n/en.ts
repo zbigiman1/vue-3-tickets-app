@@ -25,4 +25,5 @@ export const en = {
     updateTicketStatus: 'Update status',
     update: 'Update',
     copyright: 'Copyright zbigiman',
+    somethingWentWrong: 'Something went wrong.',
 }
