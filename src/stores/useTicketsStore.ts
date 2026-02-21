@@ -1,5 +1,5 @@
 import { getTicketById as apiGetTickedById, getTickets as apiGetTickets, updateTicketStatus as apiUpdateTicketStatus } from '@/api'
-import type { Ticket } from '@/types/Ticket'
+import type { Status, Ticket } from '@/types/Ticket'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -37,7 +37,7 @@ export const useTicketsStore = defineStore('tickets', () => {
         }
     }
 
-    async function updateTicketStatus(id: number, status: Ticket['status']): Promise<void> {
+    async function updateTicketStatus(id: number, status: Status): Promise<void> {
         loading.value = true
         error.value = null
         try {
@@ -56,7 +56,7 @@ export const useTicketsStore = defineStore('tickets', () => {
         }
     }
 
-    function filterTicketsByStatus(status: Ticket['status']): Ticket[] {
+    function filterTicketsByStatus(status: Status): Ticket[] {
         return tickets.value.filter(t => t.status === status)
     }
 
