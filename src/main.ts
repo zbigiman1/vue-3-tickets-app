@@ -7,8 +7,4 @@ import './style/main.scss'
 
 const pinia = createPinia()
 
-createApp(App)
-    .use(router)
-    .use(pinia)
-    .use(i18n)
-    .mount('#app')
+createApp(App).use(router).use(pinia).use(i18n).mount('#app')

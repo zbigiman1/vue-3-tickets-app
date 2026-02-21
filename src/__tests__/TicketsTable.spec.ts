@@ -20,14 +20,14 @@ vi.mock('@/stores/useTicketsStore', () => ({
 }))
 
 // Mock i18n to return the key itself (keeps assertions simple)
-vi.mock('vue-i18n', async (importOriginal) => {
-  const actual = await importOriginal() as any
+vi.mock('vue-i18n', async importOriginal => {
+  const actual = (await importOriginal()) as any
 
   return {
     ...actual,
     useI18n: () => ({
-      t: (key: string) => key,
-    }),
+      t: (key: string) => key
+    })
   }
 })
 

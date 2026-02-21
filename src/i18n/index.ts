@@ -6,7 +6,7 @@ export const messages = {
   en,
   pl
 }
-  
+
 export const i18n = createI18n({
   legacy: false,
   locale: 'pl',

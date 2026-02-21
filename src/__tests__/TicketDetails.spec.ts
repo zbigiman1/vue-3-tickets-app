@@ -17,14 +17,14 @@ vi.mock('@/stores/useTicketsStore', () => ({
 }))
 
 // Mock i18n to return the key itself (keeps assertions simple)
-vi.mock('vue-i18n', async (importOriginal) => {
-  const actual = await importOriginal() as any
+vi.mock('vue-i18n', async importOriginal => {
+  const actual = (await importOriginal()) as any
 
   return {
     ...actual,
     useI18n: () => ({
-      t: (key: string) => key,
-    }),
+      t: (key: string) => key
+    })
   }
 })
 
@@ -61,8 +61,15 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
-    mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => { const updated = { ...ticket, status: 'in_progress' }; mockStore.currentTicket = updated; return updated })
+    mockStore.getTicketById = vi.fn().mockImplementation(async () => {
+      mockStore.currentTicket = ticket
+      return ticket
+    })
+    mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => {
+      const updated = { ...ticket, status: 'in_progress' }
+      mockStore.currentTicket = updated
+      return updated
+    })
 
     const wrapper = mount(TicketDetails, {
       global: { stubs: { Loader: true, RouterLink: true } }
@@ -105,11 +112,20 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
+    mockStore.getTicketById = vi.fn().mockImplementation(async () => {
+      mockStore.currentTicket = ticket
+      return ticket
+    })
     mockStore.error = 'something bad'
 
     const wrapper = mount(TicketDetails, {
-      global: { stubs: { Loader: true, ErrorMessage: { template: '<div data-test="error">err</div>' }, RouterLink: true } }
+      global: {
+        stubs: {
+          Loader: true,
+          ErrorMessage: { template: '<div data-test="error">err</div>' },
+          RouterLink: true
+        }
+      }
     })
 
     // wait for onMounted and ensure currentTicket is set
@@ -134,13 +150,26 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
+    mockStore.getTicketById = vi.fn().mockImplementation(async () => {
+      mockStore.currentTicket = ticket
+      return ticket
+    })
     // simulate async failure
-    mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => { await Promise.resolve(); mockStore.currentTicket = undefined; return undefined })
+    mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => {
+      await Promise.resolve()
+      mockStore.currentTicket = undefined
+      return undefined
+    })
     mockStore.error = null
 
     const wrapper = mount(TicketDetails, {
-      global: { stubs: { Loader: { template: '<div data-test="loader">loader</div>' }, ErrorMessage: { template: '<div data-test="error">err</div>' }, RouterLink: true } }
+      global: {
+        stubs: {
+          Loader: { template: '<div data-test="loader">loader</div>' },
+          ErrorMessage: { template: '<div data-test="error">err</div>' },
+          RouterLink: true
+        }
+      }
     })
 
     // wait for onMounted and initial ticket render

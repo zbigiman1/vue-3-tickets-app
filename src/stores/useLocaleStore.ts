@@ -11,10 +11,14 @@ export const useLocaleStore = defineStore('locale', () => {
   }
 
   // Sync with vue-i18n
-  watch(locale, (newLocale) => {
-    i18n.global.locale.value = newLocale
-    localStorage.setItem('lang', newLocale)
-  }, { immediate: true })
+  watch(
+    locale,
+    newLocale => {
+      i18n.global.locale.value = newLocale
+      localStorage.setItem('lang', newLocale)
+    },
+    { immediate: true }
+  )
 
   return {
     locale,

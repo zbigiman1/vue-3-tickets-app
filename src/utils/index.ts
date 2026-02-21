@@ -5,7 +5,7 @@ export function formatDate(dateString: string): string {
   let dateFormat = 'pl-PL'
   if (locale === 'en') {
     dateFormat = 'en-US'
-  } 
+  }
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
@@ -14,4 +14,4 @@ export function formatDate(dateString: string): string {
     minute: '2-digit'
   }
   return new Date(dateString).toLocaleDateString(dateFormat, options)
-}   
+}

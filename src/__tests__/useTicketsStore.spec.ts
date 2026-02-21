@@ -9,7 +9,7 @@ const mockUpdateTicketStatus = vi.fn()
 vi.mock('@/api', () => ({
   getTickets: (...args: any[]) => mockGetTickets(...args),
   getTicketById: (...args: any[]) => mockGetTicketById(...args),
-  updateTicketStatus: (...args: any[]) => mockUpdateTicketStatus(...args),
+  updateTicketStatus: (...args: any[]) => mockUpdateTicketStatus(...args)
 }))
 
 import { useTicketsStore } from '@/stores/useTicketsStore'
@@ -22,7 +22,17 @@ describe('useTicketsStore', () => {
   })
 
   it('getTickets sets loading and populates tickets', async () => {
-    const tickets = [{ id: 1, subject: 'A', status: 'new', customerName: 'X', priority: 'low', createdAt: '', description: '' }]
+    const tickets = [
+      {
+        id: 1,
+        subject: 'A',
+        status: 'new',
+        customerName: 'X',
+        priority: 'low',
+        createdAt: '',
+        description: ''
+      }
+    ]
     mockGetTickets.mockResolvedValue(tickets)
 
     const store = useTicketsStore()
@@ -43,7 +53,15 @@ describe('useTicketsStore', () => {
   })
 
   it('getTicketById sets loading and returns ticket', async () => {
-    const ticket = { id: 2, subject: 'B', status: 'closed', customerName: 'Y', priority: 'high', createdAt: '', description: '' }
+    const ticket = {
+      id: 2,
+      subject: 'B',
+      status: 'closed',
+      customerName: 'Y',
+      priority: 'high',
+      createdAt: '',
+      description: ''
+    }
     mockGetTicketById.mockResolvedValue(ticket)
 
     const store = useTicketsStore()
@@ -63,7 +81,17 @@ describe('useTicketsStore', () => {
   })
 
   it('updateTicketStatus updates existing ticket in store when present', async () => {
-    const initial = [{ id: 3, subject: 'C', status: 'new', customerName: 'Z', priority: 'medium', createdAt: '', description: '' }]
+    const initial = [
+      {
+        id: 3,
+        subject: 'C',
+        status: 'new',
+        customerName: 'Z',
+        priority: 'medium',
+        createdAt: '',
+        description: ''
+      }
+    ]
     const updated = { ...initial[0], status: 'in_progress' }
 
     const store = useTicketsStore()
@@ -89,7 +117,15 @@ describe('useTicketsStore', () => {
     const store = useTicketsStore()
     store.tickets = [] as any
 
-    const updated = { id: 99, subject: 'X', status: 'closed', customerName: 'No', priority: 'low', createdAt: '', description: '' }
+    const updated = {
+      id: 99,
+      subject: 'X',
+      status: 'closed',
+      customerName: 'No',
+      priority: 'low',
+      createdAt: '',
+      description: ''
+    }
     mockUpdateTicketStatus.mockResolvedValue(updated)
 
     const p = store.updateTicketStatus(99, 'closed')
@@ -104,7 +140,9 @@ describe('useTicketsStore', () => {
   })
 
   it('getTickets sets error when API fails', async () => {
-    mockGetTickets.mockImplementation(async () => { throw new Error('network') })
+    mockGetTickets.mockImplementation(async () => {
+      throw new Error('network')
+    })
     const store = useTicketsStore()
 
     await store.getTickets()
@@ -115,7 +153,9 @@ describe('useTicketsStore', () => {
   })
 
   it('getTicketById sets error when API fails', async () => {
-    mockGetTicketById.mockImplementation(async () => { throw new Error('not found') })
+    mockGetTicketById.mockImplementation(async () => {
+      throw new Error('not found')
+    })
     const store = useTicketsStore()
 
     await store.getTicketById(5)
@@ -126,11 +166,23 @@ describe('useTicketsStore', () => {
   })
 
   it('updateTicketStatus sets error when API fails and does not mutate tickets', async () => {
-    const initial = [{ id: 7, subject: 'G', status: 'new', customerName: 'Z', priority: 'medium', createdAt: '', description: '' }]
+    const initial = [
+      {
+        id: 7,
+        subject: 'G',
+        status: 'new',
+        customerName: 'Z',
+        priority: 'medium',
+        createdAt: '',
+        description: ''
+      }
+    ]
     const store = useTicketsStore()
     store.tickets = initial as any
 
-    mockUpdateTicketStatus.mockImplementation(async () => { throw new Error('update failed') })
+    mockUpdateTicketStatus.mockImplementation(async () => {
+      throw new Error('update failed')
+    })
 
     await store.updateTicketStatus(7, 'closed')
     expect(store.loading).toBe(false)

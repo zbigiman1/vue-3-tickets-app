@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <TicketDetails />
-    </div>
+  <div>
+    <TicketDetails />
+  </div>
 </template>
 
 <script setup lang="ts">
-import TicketDetails from '@/components/TicketDetails.vue';
+import TicketDetails from '@/components/TicketDetails.vue'
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
