@@ -9,7 +9,7 @@
         <div class="tickets-filter">
             <div class="select-wrapper">
                 <label for="status-select" class="select-label">{{ t('filterByStatus') }}:</label>
-                <select v-model="filter" name="status-select" @change="handleFilterChange" class="select">
+                <select v-model="filter" name="status-select" class="select">
                     <option value="new">{{ t('new') }}</option>
                     <option value="in_progress">{{ t('in_progress') }}</option>
                     <option value="closed">{{ t('closed') }}</option>
@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="ticket in tickets" :key="ticket.id" class="ticket-row" @click="handaleRowClick(ticket.id)">
+                <tr v-for="ticket in filteredTickets" :key="ticket.id" class="ticket-row" @click="handaleRowClick(ticket.id)">
                     <td>{{ ticket.id }}</td>
                     <td>{{ ticket.customerName }}</td>
                     <td>{{ ticket.subject }}</td>
@@ -42,8 +42,8 @@
 
 <script setup lang="ts">
 import { useTicketsStore } from '@/stores/useTicketsStore';
-import type { Status, Ticket } from '@/types';
-import { onMounted, ref } from 'vue';
+import type { Status } from '@/types';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import ErrorMessage from './ErrorMessage.vue';
@@ -52,23 +52,22 @@ import Loader from './Loader.vue';
 const { t } = useI18n()
 const router = useRouter()
 const ticketsStore = useTicketsStore();
-const tickets = ref<Ticket[]>([])
 const filter = ref<Status | 'all'>('all')
 
-function handleFilterChange() {
+const filteredTickets = computed(() => {
     if (filter.value === 'all') {
-        tickets.value = ticketsStore.tickets
+        return ticketsStore.tickets
     } else {
-        tickets.value = ticketsStore.filterTicketsByStatus(filter.value)
+        return ticketsStore.filterTicketsByStatus(filter.value)
     }
-}
+})    
 
 function handaleRowClick(id: number) {
     router.push(`/ticket/${id}`)
 }
 
 onMounted(async () => {
-    tickets.value = await ticketsStore.getTickets()
+    await ticketsStore.getTickets()
 })
 </script>
 

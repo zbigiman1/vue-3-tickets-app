@@ -5,38 +5,38 @@ import { ref } from 'vue'
 
 export const useTicketsStore = defineStore('tickets', () => {
     const tickets = ref<Ticket[]>([])
+    const currentTicket = ref<Ticket | undefined>(undefined)
     const loading = ref(false)
     const error = ref<string | null>(null)
 
-    async function getTickets(): Promise<Ticket[]> {
+    async function getTickets(): Promise<void> {
         loading.value = true
         error.value = null
         try {
             tickets.value = await apiGetTickets()
-            return tickets.value
-        } catch (e: any) {
+         } catch (e: any) {
             error.value = e instanceof Error ? e.message : String(e)
-            return []
         } finally {
             loading.value = false
         }
     }
 
-    async function getTicketById(id: number): Promise<Ticket | undefined> {
+    async function getTicketById(id: number): Promise<void> {
+        if (currentTicket.value && currentTicket.value.id === id) {
+            return
+        }
         loading.value = true
         error.value = null
         try {
-            const ticket = await apiGetTickedById(id)
-            return ticket
+            currentTicket.value = await apiGetTickedById(id)
         } catch (e: any) {
             error.value = e instanceof Error ? e.message : String(e)
-            return undefined
-        } finally {
+           } finally {
             loading.value = false
         }
     }
 
-    async function updateTicketStatus(id: number, status: Ticket['status']): Promise<Ticket | undefined> {
+    async function updateTicketStatus(id: number, status: Ticket['status']): Promise<void> {
         loading.value = true
         error.value = null
         try {
@@ -47,10 +47,9 @@ export const useTicketsStore = defineStore('tickets', () => {
                     tickets.value[index] = updatedTicket
                 }
             }
-            return updatedTicket
+            currentTicket.value = updatedTicket
         } catch (e: any) {
             error.value = e instanceof Error ? e.message : String(e)
-            return undefined
         } finally {
             loading.value = false
         }
@@ -62,6 +61,7 @@ export const useTicketsStore = defineStore('tickets', () => {
 
     return {
         tickets,
+        currentTicket,
         getTickets,
         getTicketById,
         updateTicketStatus,
