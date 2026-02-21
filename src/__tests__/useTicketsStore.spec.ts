@@ -27,8 +27,8 @@ describe('useTicketsStore', () => {
 
     const store = useTicketsStore()
 
-  // initial error should be null
-  expect(store.error).toBeNull()
+    // initial error should be null
+    expect(store.error).toBeNull()
 
     const p = store.getTickets()
     // loading should be true while promise pending
@@ -48,8 +48,8 @@ describe('useTicketsStore', () => {
 
     const store = useTicketsStore()
 
-  // initial error should be null
-  expect(store.error).toBeNull()
+    // initial error should be null
+    expect(store.error).toBeNull()
 
     const p = store.getTicketById(2)
     expect(store.loading).toBe(true)
@@ -104,7 +104,7 @@ describe('useTicketsStore', () => {
   })
 
   it('getTickets sets error when API fails', async () => {
-  mockGetTickets.mockImplementation(async () => { throw new Error('network') })
+    mockGetTickets.mockImplementation(async () => { throw new Error('network') })
     const store = useTicketsStore()
 
     await store.getTickets()
@@ -115,7 +115,7 @@ describe('useTicketsStore', () => {
   })
 
   it('getTicketById sets error when API fails', async () => {
-  mockGetTicketById.mockImplementation(async () => { throw new Error('not found') })
+    mockGetTicketById.mockImplementation(async () => { throw new Error('not found') })
     const store = useTicketsStore()
 
     await store.getTicketById(5)
@@ -130,7 +130,7 @@ describe('useTicketsStore', () => {
     const store = useTicketsStore()
     store.tickets = initial as any
 
-  mockUpdateTicketStatus.mockImplementation(async () => { throw new Error('update failed') })
+    mockUpdateTicketStatus.mockImplementation(async () => { throw new Error('update failed') })
 
     await store.updateTicketStatus(7, 'closed')
     expect(store.loading).toBe(false)
