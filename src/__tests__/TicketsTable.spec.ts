@@ -82,8 +82,8 @@ describe('TicketsTable.vue', () => {
     const rows = wrapper.findAll('tbody tr.ticket-row')
     expect(rows.length).toBe(2)
 
-  // error should be cleared on success
-  expect(mockStore.error).toBeNull()
+    // error should be cleared on success
+    expect(mockStore.error).toBeNull()
 
     // Click first row and assert router.push called with expected path
     const firstRow = rows[0]
