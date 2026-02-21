@@ -25,6 +25,7 @@ export const useTicketsStore = defineStore('tickets', () => {
         if (currentTicket.value && currentTicket.value.id === id) {
             return
         }
+        currentTicket.value = undefined
         loading.value = true
         error.value = null
         try {
