@@ -1,4 +1,8 @@
-import { getTicketById as apiGetTickedById, getTickets as apiGetTickets, updateTicketStatus as apiUpdateTicketStatus } from '@/api'
+import {
+    getTicketById as apiGetTickedById,
+    getTickets as apiGetTickets,
+    updateTicketStatus as apiUpdateTicketStatus
+} from '@/api'
 import type { Status, Ticket } from '@/types/Ticket'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -14,7 +18,7 @@ export const useTicketsStore = defineStore('tickets', () => {
         error.value = null
         try {
             tickets.value = await apiGetTickets()
-         } catch (e: any) {
+        } catch (e: any) {
             error.value = e instanceof Error ? e.message : String(e)
         } finally {
             loading.value = false
@@ -32,7 +36,7 @@ export const useTicketsStore = defineStore('tickets', () => {
             currentTicket.value = await apiGetTickedById(id)
         } catch (e: any) {
             error.value = e instanceof Error ? e.message : String(e)
-           } finally {
+        } finally {
             loading.value = false
         }
     }
