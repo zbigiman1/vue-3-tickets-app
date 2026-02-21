@@ -41,13 +41,13 @@
 </template>
 
 <script setup lang="ts">
+import ErrorMessage from '@/components/ErrorMessage.vue';
+import Loader from '@/components/Loader.vue';
 import { useTicketsStore } from '@/stores/useTicketsStore';
 import type { Status } from '@/types';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import ErrorMessage from './ErrorMessage.vue';
-import Loader from './Loader.vue';
 
 const { t } = useI18n()
 const router = useRouter()
