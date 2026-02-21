@@ -27,14 +27,16 @@ describe('useTicketsStore', () => {
 
     const store = useTicketsStore()
 
+  // initial error should be null
+  expect(store.error).toBeNull()
+
     const p = store.getTickets()
     // loading should be true while promise pending
     expect(store.loading).toBe(true)
 
-    const result = await p
-    expect(result).toEqual(tickets)
+    await p
+    // after resolution the tickets ref should be populated
     expect(store.loading).toBe(false)
-    // error should be cleared on success
     expect(store.error).toBeNull()
     expect(store.tickets).toEqual(tickets)
     expect(mockGetTickets).toHaveBeenCalled()
@@ -46,11 +48,15 @@ describe('useTicketsStore', () => {
 
     const store = useTicketsStore()
 
+  // initial error should be null
+  expect(store.error).toBeNull()
+
     const p = store.getTicketById(2)
     expect(store.loading).toBe(true)
 
-    const result = await p
-    expect(result).toEqual(ticket)
+    await p
+    // result is available via currentTicket ref
+    expect(store.currentTicket).toEqual(ticket)
     expect(store.loading).toBe(false)
     expect(store.error).toBeNull()
     expect(mockGetTicketById).toHaveBeenCalledWith(2)
@@ -70,8 +76,9 @@ describe('useTicketsStore', () => {
     const p = store.updateTicketStatus(3, 'in_progress')
     expect(store.loading).toBe(true)
 
-    const result = await p
-    expect(result).toEqual(updated)
+    await p
+    // updated ticket should now be currentTicket and present in tickets array
+    expect(store.currentTicket).toEqual(updated)
     expect(store.loading).toBe(false)
     expect(store.error).toBeNull()
     expect(store.tickets.find((t: any) => t.id === 3)?.status).toBe('in_progress')
@@ -88,30 +95,32 @@ describe('useTicketsStore', () => {
     const p = store.updateTicketStatus(99, 'closed')
     expect(store.loading).toBe(true)
 
-    const result = await p
-    expect(result).toEqual(updated)
+    await p
+    // currentTicket should be set to updated, but tickets array remains unchanged
+    expect(store.currentTicket).toEqual(updated)
     expect(store.loading).toBe(false)
     expect(store.error).toBeNull()
-    // tickets array remains unchanged
     expect(store.tickets).toEqual([])
   })
 
   it('getTickets sets error when API fails', async () => {
-    mockGetTickets.mockRejectedValue(new Error('network'))
+  mockGetTickets.mockImplementation(async () => { throw new Error('network') })
     const store = useTicketsStore()
 
-    const result = await store.getTickets()
-    expect(result).toEqual([])
+    await store.getTickets()
+    // on error the tickets ref should remain empty and error set
+    expect(store.tickets).toEqual([])
     expect(store.loading).toBe(false)
     expect(store.error).toBe('network')
   })
 
   it('getTicketById sets error when API fails', async () => {
-    mockGetTicketById.mockRejectedValue(new Error('not found'))
+  mockGetTicketById.mockImplementation(async () => { throw new Error('not found') })
     const store = useTicketsStore()
 
-    const result = await store.getTicketById(5)
-    expect(result).toBeUndefined()
+    await store.getTicketById(5)
+    // on error currentTicket should be undefined and error set
+    expect(store.currentTicket).toBeUndefined()
     expect(store.loading).toBe(false)
     expect(store.error).toBe('not found')
   })
@@ -121,15 +130,14 @@ describe('useTicketsStore', () => {
     const store = useTicketsStore()
     store.tickets = initial as any
 
-    mockUpdateTicketStatus.mockRejectedValue(new Error('update failed'))
+  mockUpdateTicketStatus.mockImplementation(async () => { throw new Error('update failed') })
 
-    const result = await store.updateTicketStatus(7, 'closed')
-    expect(result).toBeUndefined()
+    await store.updateTicketStatus(7, 'closed')
     expect(store.loading).toBe(false)
     expect(store.error).toBe('update failed')
-  // tickets should remain unchanged
-  expect(store.tickets.length).toBeGreaterThan(0)
-  expect(store.tickets[0]!.status).toBe('new')
+    // tickets should remain unchanged
+    expect(store.tickets.length).toBeGreaterThan(0)
+    expect(store.tickets[0]!.status).toBe('new')
   })
 
   it('filterTicketsByStatus returns filtered list', () => {

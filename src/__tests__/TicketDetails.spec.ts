@@ -1,15 +1,16 @@
 import TicketDetails from '@/components/TicketDetails.vue'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, reactive } from 'vue'
 
-const mockStore: any = {
+const mockStore: any = reactive({
   tickets: [],
   loading: false,
   error: null,
+  currentTicket: undefined,
   getTicketById: vi.fn(),
   updateTicketStatus: vi.fn()
-}
+})
 
 vi.mock('@/stores/useTicketsStore', () => ({
   useTicketsStore: () => mockStore
@@ -60,16 +61,19 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockResolvedValue(ticket)
-    mockStore.updateTicketStatus = vi.fn().mockResolvedValue({ ...ticket, status: 'in_progress' })
+  mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
+  mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => { const updated = { ...ticket, status: 'in_progress' }; mockStore.currentTicket = updated; return updated })
 
     const wrapper = mount(TicketDetails, {
       global: { stubs: { Loader: true, RouterLink: true } }
     })
 
-    // wait for onMounted to resolve
-    await nextTick()
-    await Promise.resolve()
+  // wait for onMounted to resolve — ensure the mocked getTicketById completed
+  await nextTick()
+  await Promise.resolve()
+  // in tests we explicitly await the mocked call to ensure currentTicket is set
+  if (mockStore.getTicketById) await mockStore.getTicketById()
+  await nextTick()
 
     // verify ticket fields are rendered
     expect(wrapper.text()).toContain('Alice')
@@ -101,16 +105,18 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockResolvedValue(ticket)
-    mockStore.error = 'something bad'
+  mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
+  mockStore.error = 'something bad'
 
     const wrapper = mount(TicketDetails, {
       global: { stubs: { Loader: true, ErrorMessage: { template: '<div data-test="error">err</div>' }, RouterLink: true } }
     })
 
-    // wait for onMounted
-    await nextTick()
-    await Promise.resolve()
+  // wait for onMounted and ensure currentTicket is set
+  await nextTick()
+  await Promise.resolve()
+  if (mockStore.getTicketById) await mockStore.getTicketById()
+  await nextTick()
 
     // since ticket exists and error is set, ErrorMessage should be rendered (v-else-if branch)
     expect(wrapper.find('[data-test="error"]').exists()).toBe(true)
@@ -128,9 +134,9 @@ describe('TicketDetails.vue', () => {
     }
 
     mockStore.loading = false
-    mockStore.getTicketById = vi.fn().mockResolvedValue(ticket)
-    // simulate async failure
-    mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => { await Promise.resolve(); return undefined })
+  mockStore.getTicketById = vi.fn().mockImplementation(async () => { mockStore.currentTicket = ticket; return ticket })
+  // simulate async failure
+  mockStore.updateTicketStatus = vi.fn().mockImplementation(async () => { await Promise.resolve(); mockStore.currentTicket = undefined; return undefined })
     mockStore.error = null
 
     const wrapper = mount(TicketDetails, {
@@ -150,7 +156,8 @@ describe('TicketDetails.vue', () => {
     const button = wrapper.find('button')
     await button.trigger('click')
 
-    expect(mockStore.updateTicketStatus).toHaveBeenCalledWith(10, 'closed')
+  // component uses the route param (mocked as '1') as the id passed to updateTicketStatus
+  expect(mockStore.updateTicketStatus).toHaveBeenCalledWith(1, 'closed')
 
     // wait for async mock and reactivity to flush
     await nextTick()
