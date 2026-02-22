@@ -18,7 +18,7 @@ export const useTicketsStore = defineStore('tickets', () => {
     error.value = null
     try {
       tickets.value = await apiGetTickets()
-    } catch (e: any) {
+    } catch (e: unknown) {
       error.value = e instanceof Error ? e.message : String(e)
     } finally {
       loading.value = false
@@ -34,7 +34,7 @@ export const useTicketsStore = defineStore('tickets', () => {
     error.value = null
     try {
       currentTicket.value = await apiGetTickedById(id)
-    } catch (e: any) {
+    } catch (e: unknown) {
       error.value = e instanceof Error ? e.message : String(e)
     } finally {
       loading.value = false
@@ -53,7 +53,7 @@ export const useTicketsStore = defineStore('tickets', () => {
         }
       }
       currentTicket.value = updatedTicket
-    } catch (e: any) {
+    } catch (e: unknown) {
       error.value = e instanceof Error ? e.message : String(e)
     } finally {
       loading.value = false
