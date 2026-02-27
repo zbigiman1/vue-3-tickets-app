@@ -1,10 +1,9 @@
-# vue-3-tickets-app
-
-## Example app with:
+# Example app with:
 
 - Vue 3
 - Pinia store
 - i18n localization
+- vitest unit tests
 
 ## Run dev
 
